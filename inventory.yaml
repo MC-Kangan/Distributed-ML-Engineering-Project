@@ -1,0 +1,17 @@
+mymachines:
+  hosts:
+    machine_client:
+      # ec2-13-43-146-250.eu-west-2.compute.amazonaws.com
+      ansible_host: 10.0.14.227
+    cluster_01:
+      # ec2-18-135-233-16.eu-west-2.compute.amazonaws.com
+      ansible_host: 10.0.0.123
+    cluster_02:
+      # ec2-18-134-106-71.eu-west-2.compute.amazonaws.com
+      ansible_host: 10.0.1.105
+    cluster_03:
+      # ec2-18-168-210-57.eu-west-2.compute.amazonaws.com
+      ansible_host: 10.0.1.188
+    cluster_04:
+      # ec2-18-133-53-60.eu-west-2.compute.amazonaws.com
+      ansible_host: 10.0.0.15
