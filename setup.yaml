@@ -1,0 +1,32 @@
+---
+- name: Install Python and necessary packages
+  hosts: mymachines
+  become: true
+  tasks:
+    - name: Install yum packages for Python and tools
+      ansible.builtin.yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python3
+        - python3-pip
+        - unzip
+        - git
+        - wget
+      
+    # - name: Install Python dependencies with pip
+    #   ansible.builtin.pip:
+    #     name: "{{ packages }}"
+    #     state: present
+    #   vars:
+    #     packages:
+    #       - torch # Assuming PyTorch is required
+    #       - numpy
+    #       - scipy
+    #       - biopython
+
+    - name: Install Python packages
+      ansible.builtin.shell:
+        cmd: "pip install numpy scipy biopython torch"
+
+          
