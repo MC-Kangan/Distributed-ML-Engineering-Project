@@ -1,0 +1,24 @@
+---
+- name: Download, extract, and clean up a tar file
+  hosts: machine_client
+
+  become: yes  # Only if you need root privileges for the tasks
+  tasks:
+    - name: Download a tar file using wget
+      ansible.builtin.shell:
+        cmd: wget -O /home/ec2-user/data/pdb70_from_mmcif_latest.tar.gz https://wwwuser.gwdg.de/~compbiol/data/hhsuite/databases/hhsuite_dbs/pdb70_from_mmcif_latest.tar.gz
+      register: wget_result
+
+    # - name: Extract the zip file
+    #   ansible.builtin.unarchive:
+    #     src: /home/ec2-user/data/pdb70_from_mmcif_latest.tar.gz
+    #     dest: /home/ec2-user/data
+    #     remote_src: yes
+    #     extra_opts: [--gzip]
+      #when: wget_result is succeeded
+
+    # - name: Delete the downloaded zip-file from cluster machine to save space
+    #   ansible.builtin.shell:
+    #     cmd: rm -f /home/ec2-user/data/pdb70_from_mmcif_latest.tar.gz
+
+

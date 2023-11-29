@@ -1,5 +1,6 @@
 
 ---
+# Be vary careful for this yaml file
 - name: Remove cache files from root directory
   hosts: mymachines
   become: yes  # This is important to gain root privileges
@@ -7,3 +8,4 @@
     - name: Remove cache files in /root/.cache
       ansible.builtin.shell: 
         cmd: rm -rf /root/.cache/*
+        #cmd: rm -rf /home/ec2-user/data/coursework_data
