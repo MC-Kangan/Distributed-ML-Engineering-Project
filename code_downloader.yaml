@@ -1,0 +1,15 @@
+---
+- name: Download codebase from github
+  hosts: mymachines
+  become: yes  
+  tasks:
+    # - name: Download and unzip hh-suite code
+    #   ansible.builtin.shell:
+    #     cmd: cd /home/ec2-user/data; wget https://github.com/soedinglab/hh-suite/releases/download/v3.3.0/hhsuite-3.3.0-AVX2-Linux.tar.gz; tar xvfz hhsuite-3.3.0-AVX2-Linux.tar.gz; export PATH="$(pwd)/bin:$(pwd)/scripts:$PATH"
+    #   register: wget_result
+
+
+    - name: Download and unzip s4pred code
+      ansible.builtin.shell:
+        cmd: cd /home/ec2-user/data; git clone https://github.com/psipred/s4pred; cd s4pred; wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz; tar -xvzf weights.tar.gz
+
