@@ -1,0 +1,36 @@
+---
+- name: Upload and download data from S3 bucket
+  hosts: mymachines
+  become: yes  
+  tasks:
+    - name: Install awscli
+      ansible.builtin.pip:
+        name: awscli
+
+    - name: Ensure AWS S3 module dependencies are installed
+      ansible.builtin.pip:
+        name: boto3
+        state: present
+
+    # Task to create a local directory to store files downloaded from S3
+    - name: Create local directory for S3 files
+      ansible.builtin.file: # Using the file module to manage files and directories
+        path: /home/ec2-user/data/Coursework # Path where the directory will be created
+        state: directory # Ensures that the directory exists, creates it if it doesn't
+
+    # Task to list all files in a specified S3 bucket directory
+    - name: List files
+      amazon.aws.aws_s3: 
+        mode: list # Setting mode to 'list' to retrieve a list of objects
+        bucket: comp0235-ucabkk1 # The name of the S3 bucket
+        prefix: Coursework # Listing objects that start with 'Coursework', effectively listing files in the 'Coursework' directory
+      register: listresult # Storing the result in a variable named 'listresult'
+
+    # Task to copy each listed file from S3 to the local directory
+    - name: Copy files
+      amazon.aws.aws_s3: 
+        bucket: comp0235-ucabkk1 
+        object: '{{ item }}' # The object (file) to copy, specified for each item in the list
+        dest: '/home/ec2-user/data/Coursework/{{ item|basename }}' # The destination path for each file, using basename to extract the file name
+        mode: get # Mode set to 'get' to download/copy the file
+      with_items: '{{ listresult.s3_keys }}' # Looping over each item in the 'listresult.s3_keys' list, which contains the keys of the files from S3
