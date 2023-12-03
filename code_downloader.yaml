@@ -1,21 +1,32 @@
 ---
 - name: Download codebase from github
-  hosts: mymachines
+  hosts: cluster_01, cluster_02, cluster_03, cluster_04 #mymachines
   become: yes  
   tasks:
+    # - name: Create local directory for the downloaded codebase for hhsuite
+    #   ansible.builtin.file: 
+    #     path: /home/ec2-user/data/hh_suite
+    #     state: directory 
+
     # - name: Download and unzip hh-suite code
     #   ansible.builtin.shell:
-    #     cmd: cd /home/ec2-user/data; wget https://github.com/soedinglab/hh-suite/releases/download/v3.3.0/hhsuite-3.3.0-AVX2-Linux.tar.gz; tar xvfz hhsuite-3.3.0-AVX2-Linux.tar.gz; export PATH="$(pwd)/bin:$(pwd)/scripts:$PATH"
+    #     cmd: cd /home/ec2-user/data/hh_suite; wget https://github.com/soedinglab/hh-suite/releases/download/v3.3.0/hhsuite-3.3.0-AVX2-Linux.tar.gz; tar xvfz hhsuite-3.3.0-AVX2-Linux.tar.gz; export PATH="$(pwd)/bin:$(pwd)/scripts:$PATH"
     #   register: wget_result
-
 
     # - name: Download and unzip s4pred code
     #   ansible.builtin.shell:
     #     cmd: cd /home/ec2-user/data; git clone https://github.com/psipred/s4pred; cd s4pred; wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz; tar -xvzf weights.tar.gz
 
+    # - name: Delete pre-installed packages
+    #   ansible.builtin.shell:
+    #     cmd: cd /home/ec2-user/data; rm -rf bin data scripts; rm -f hhsuite-3.3.0-AVX2-Linux.tar.gz LICENSE README;
 
-    - name: Copy coursework folder (including pipeline_script.py and results_parser.py to cluster and client machines)
-      ansible.builtin.copy:
-        src: /home/ec2-user/UCL_COMP0235_BIOCHEM_PROJECT/Coursework
-        dest: /home/ec2-user/data/Coursework
-        recursive: yes
+    - name: Create local directory for the downloaded codebase for hhsuite
+      ansible.builtin.file: 
+        path: /home/ec2-user/data/pdb70
+        state: directory 
+
+    - name: Move dataset to pdb70 folder
+      ansible.builtin.shell:
+        cmd: find /home/ec2-user/data -maxdepth 1 -type f -exec mv {} /home/ec2-user/data/pdb70 \;
+
