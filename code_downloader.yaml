@@ -11,7 +11,6 @@
     - name: Download and unzip hh-suite code
       ansible.builtin.shell:
         cmd: cd /home/ec2-user/data/hh_suite; wget https://github.com/soedinglab/hh-suite/releases/download/v3.3.0/hhsuite-3.3.0-AVX2-Linux.tar.gz; tar xvfz hhsuite-3.3.0-AVX2-Linux.tar.gz; export PATH="$(pwd)/bin:$(pwd)/scripts:$PATH"
-      register: wget_result
 
     - name: Download and unzip s4pred code
       ansible.builtin.shell:

@@ -1,0 +1,16 @@
+---
+- name: Run Test.fa and Verify Output File Date
+  hosts: mymachines
+  become: yes
+  tasks:
+    - name: Run the test script
+      ansible.builtin.shell:
+        cmd: cd /home/ec2-user/data/Coursework; python pipeline_script.py test.fa;
+
+    - name: Check the last modified date of hhr_parse.out
+      command: stat -c "%y" /home/ec2-user/data/Coursework/hhr_parse.out
+      register: file_stat
+
+    - name: Print file_stat to check whether the hhr_parse.out file is produced successfully
+      debug:
+        var: file_stat
