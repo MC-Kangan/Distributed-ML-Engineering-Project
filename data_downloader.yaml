@@ -1,6 +1,6 @@
 ---
 - name: Download, extract, and clean up a tar file
-  hosts: machine_client
+  hosts: mymachines
   become: yes  # Only if you need root privileges for the tasks
   tasks:
         
