@@ -1,0 +1,25 @@
+---
+- name: Distribute Model Prediction Task
+  hosts: mymachines
+  become: true
+  become_user: root
+
+  tasks:
+    # Get the index of each of my machines based on their orders in the inventory file
+    - name: Determine index for each host
+      set_fact:
+        host_index: "{{ ansible_play_hosts_all.index(inventory_hostname) + 1 }}"
+
+    # Print the host name to check
+    - name: Print host index
+      debug:
+        msg: "Host {{ inventory_hostname }} has index {{ host_index }}"
+
+    # Run extract_fasta_files.py which takes in 1 argument, the host_index
+    # This code is used to extract protein sequences from uniprotkb_proteome_UP000005640_2023_10_05.fasta based on experiment ids
+    - name: Run python script
+      ansible.builtin.shell:
+        cmd: cd /home/ec2-user/data/Coursework; python extract_fasta_files.py {{ host_index }}
+
+
+

@@ -1,5 +1,6 @@
 import os
 
+
 def split_file_into_parts(filename, num_parts):
     """
     Splits the file specified by filename into num_parts equal parts.
@@ -25,6 +26,11 @@ def split_file_into_parts(filename, num_parts):
         with open(f'experiment_part_{i+1}.txt', 'w') as part_file:
             part_file.writelines(part)
             
-            
+
 if __name__ == "__main__":
+    # Split the file into 5 parts
     split_file_into_parts('./experiment_ids.txt', 5)
+    
+    
+    
+    

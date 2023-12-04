@@ -20,7 +20,6 @@
     #     state: present
     #   vars:
     #     packages:
-    #       - torch # Assuming PyTorch is required
     #       - numpy
     #       - scipy
     #       - biopython
