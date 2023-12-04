@@ -23,7 +23,7 @@ def run_hhsearch(a3m_file):
     """
     cmd = ['/home/ec2-user/data/hh_suite/bin/hhsearch',
            '-i', a3m_file, '-cpu', '1', '-d', 
-           '/home/ec2-user/data/pdb70']
+           '/home/ec2-user/data/pdb70/pdb70']
     print(f'STEP 3: RUNNING HHSEARCH: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
@@ -72,7 +72,6 @@ def read_input(file):
         sequences[record.id] = record.seq
         ids.append(record.id)
     return(sequences)
-
 
 if __name__ == "__main__":
     

@@ -27,6 +27,12 @@
 
     - name: Install Python packages
       ansible.builtin.shell:
-        cmd: "pip install numpy scipy biopython torch"
+        cmd: "pip install numpy scipy biopython"
+
+    - name: Install PyTorch (CPU version)
+      ansible.builtin.pip:
+        name: torch
+        extra_args: "--index-url https://download.pytorch.org/whl/cpu"
+        state: forcereinstall
 
           
