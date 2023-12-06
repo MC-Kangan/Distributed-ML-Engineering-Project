@@ -1,0 +1,13 @@
+---
+- name: Get Public IP Addresses
+  hosts: mymachines
+  become: yes  # If required for permissions
+
+  tasks:
+    - name: Get Public IP Address
+      shell: curl http://169.254.169.254/latest/meta-data/public-ipv4
+      register: public_ip
+
+    - name: Show Public IP Address
+      debug:
+        msg: "The public IP address is {{ public_ip.stdout }}"
