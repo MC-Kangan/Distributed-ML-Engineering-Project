@@ -25,6 +25,7 @@
       name: node_exporter
       state: started
       daemon_reload: true
+      
   # - name: open port 9100 (Skip this step as I did not download firewalld on my cluster machines)
   #   ansible.posix.firewalld:
   #     port: 9100/tcp

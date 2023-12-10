@@ -22,7 +22,7 @@ def run_hhsearch(a3m_file):
     Run HHSearch to produce the hhr file
     """
     cmd = ['/home/ec2-user/data/hh_suite/bin/hhsearch',
-           '-i', a3m_file, '-cpu', '1', '-d', 
+           '-i', a3m_file, '-cpu', '4', '-d', 
            '/home/ec2-user/data/pdb70/pdb70']
     print(f'STEP 3: RUNNING HHSEARCH: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
