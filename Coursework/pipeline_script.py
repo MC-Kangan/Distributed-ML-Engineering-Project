@@ -27,9 +27,9 @@ def run_hhsearch(a3m_file, machine_id):
     Run HHSearch to produce the hhr file
     """
     if machine_id == '1':
-        num_thread = 4 - 1
+        num_thread = '3'
     else:
-        num_thread = 2 - 1
+        num_thread = '1'
         
     cmd = ['/home/ec2-user/data/hh_suite/bin/hhsearch',
            '-i', a3m_file, '-cpu', num_thread, '-d', 
@@ -64,9 +64,10 @@ def run_s4pred(input_file, out_file, machine_id):
     """
     
     if machine_id == '1':
-        num_thread = 4 - 1
+        num_thread = '3'
     else:
-        num_thread = 2 - 1
+        num_thread = '1'
+    print(f'num_thread = {num_thread} for this prediction.')
     
     cmd = ['/usr/bin/python3', '/home/ec2-user/data/s4pred/run_model.py',
            '-t', 'horiz', '-T', num_thread, input_file]
@@ -94,7 +95,7 @@ if __name__ == "__main__":
     machine_id = str(sys.argv[1])
     test = sys.argv[2] # If test == T means testing mode, else non-testing mode
     
-    start_http_server(8000)
+    start_http_server(4505)
     
     if test == 'T':
         sequences = read_input(f'test.fa')
@@ -118,3 +119,6 @@ if __name__ == "__main__":
         counter += 1
         progress_percent_metric.set((counter + 1) / len(sequences) * 100)
         progress_count_metric.set(counter)
+    
+    progress_percent_metric.set(100)
+    progress_count_metric.set(counter)

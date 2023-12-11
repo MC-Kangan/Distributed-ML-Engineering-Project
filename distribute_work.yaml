@@ -34,7 +34,7 @@
 
     - name: Run python script to start prediction tasks
       ansible.builtin.shell:
-        cmd: cd /home/ec2-user/data/Coursework; python pipeline_script.py fasta_part_{{ host_index }}.fasta
+        cmd: cd /home/ec2-user/data/Coursework; python pipeline_script.py {{ host_index }} F
 
 
 
