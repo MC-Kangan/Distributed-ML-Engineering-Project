@@ -26,7 +26,7 @@
 
     - name: Install Python packages
       ansible.builtin.shell:
-        cmd: "pip install numpy scipy biopython"
+        cmd: "pip install numpy scipy biopython prometheus_client"
 
     - name: Install PyTorch (CPU version)
       ansible.builtin.pip:
