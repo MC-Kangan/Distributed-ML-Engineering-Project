@@ -23,14 +23,27 @@ def split_file_into_parts(filename, num_parts):
 
     # Save each part to a separate file
     for i, part in enumerate(parts):
-        with open(f'experiment_part_{i+1}.txt', 'w') as part_file:
-            part_file.writelines(part)
+        
+        # When index = 0 or 1, allocate both parts to experiment_part_1.txt, 
+        # which is allocated to the client machine
+        
+        if i == 0:
+            with open(f'experiment_part_1.txt', 'w') as part_file:
+                part_file.writelines(part)
+        elif i == 1:
+            with open(f'experiment_part_1.txt', 'a') as part_file:
+                part_file.writelines(part)
+        else:
+            with open(f'experiment_part_{i}.txt', 'w') as part_file:
+                part_file.writelines(part)
+            
             
 
 if __name__ == "__main__":
-    # Split the file into 5 parts
-    split_file_into_parts('./experiment_ids.txt', 5)
-    
+    # Split the file into 6 parts (1000 ids per part)
+    # Client machine has more cpus thus takes 2 parts (2000 ids), which is stored in experiment_part_1
+    # Cluster mchines have less cpus thus take 1 part (1000 ids) each, which are stored in experiment_part_2 to 5 
+    split_file_into_parts('./experiment_ids.txt', 6)
     
     
     
