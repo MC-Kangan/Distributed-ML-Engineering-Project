@@ -14,19 +14,16 @@
         - git
         - wget
       
-    # - name: Install Python dependencies with pip
-    #   ansible.builtin.pip:
-    #     name: "{{ packages }}"
-    #     state: present
-    #   vars:
-    #     packages:
-    #       - numpy
-    #       - scipy
-    #       - biopython
-
-    - name: Install Python packages
-      ansible.builtin.shell:
-        cmd: "pip install numpy scipy biopython prometheus_client"
+    - name: Install Python dependencies with pip
+      ansible.builtin.pip:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - numpy
+          - scipy
+          - biopython
+          - prometheus_client
 
     - name: Install PyTorch (CPU version)
       ansible.builtin.pip:

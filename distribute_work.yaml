@@ -21,20 +21,20 @@
     #   ansible.builtin.shell:
     #     cmd: cd /home/ec2-user/data/Coursework; python extract_fasta_files.py {{ host_index }}
 
-    - name: Remove the hhr_parse.out from previous run exists
-      stat:
-        path: /home/ec2-user/data/Coursework/hhr_parse.out  
-      register: file_stat
+    # - name: Remove the hhr_parse.out from previous run exists
+    #   stat:
+    #     path: /home/ec2-user/data/Coursework/hhr_parse.out  
+    #   register: file_stat
 
-    - name: Delete the file if it exists
-      file:
-        path: /home/ec2-user/data/Coursework/hhr_parse.out  
-        state: absent
-      when: file_stat.stat.exists
+    # - name: Delete the file if it exists
+    #   file:
+    #     path: /home/ec2-user/data/Coursework/hhr_parse.out  
+    #     state: absent
+    #   when: file_stat.stat.exists
 
-    - name: Run python script to start prediction tasks
-      ansible.builtin.shell:
-        cmd: cd /home/ec2-user/data/Coursework; python pipeline_script.py {{ host_index }} F
+    # - name: Run python script to start prediction tasks
+    #   ansible.builtin.shell:
+    #     cmd: cd /home/ec2-user/data/Coursework; python pipeline_script.py {{ host_index }} F
 
 
 
