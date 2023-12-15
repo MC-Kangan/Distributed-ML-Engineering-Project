@@ -117,8 +117,8 @@ if __name__ == "__main__":
         run_hhsearch(a3m_file, machine_id)
         run_parser(hhr_file)
         counter += 1
-        progress_percent_metric.set((counter + 1) / len(sequences) * 100)
+        progress_percent_metric.set(counter / len(sequences) * 100)
         progress_count_metric.set(counter)
     
     progress_percent_metric.set(100)
-    progress_count_metric.set(counter)
+    progress_count_metric.set(len(sequences))

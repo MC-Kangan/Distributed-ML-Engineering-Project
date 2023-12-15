@@ -1,0 +1,28 @@
+---
+- name: Collect Model Prediction Results
+  hosts: mymachines
+  become: true
+  become_user: root
+  gather_facts: no
+  vars:
+    source_file: "/home/ec2-user/data/Coursework/hhr_parse.out"
+    destination_dir: "/home/ec2-user/UCL_COMP0235_BIOCHEM_PROJECT/results/"
+
+
+  tasks:
+    # Get the index of each of my machines based on their orders in the inventory file
+    - name: Determine index for each host
+      set_fact:
+        host_index: "{{ ansible_play_hosts_all.index(inventory_hostname) + 1 }}"
+
+    # Print the host name to check
+    - name: Print host index
+      debug:
+        msg: "Host {{ inventory_hostname }} has index {{ host_index }} fasta_part_{{ host_index }}.fasta"
+
+
+    - name: Copy file from remote to host
+      fetch:
+        src: "{{ source_file }}"
+        dest: "{{ destination_dir }}hhr_parse_{{ host_index }}.out"
+        flat: yes
