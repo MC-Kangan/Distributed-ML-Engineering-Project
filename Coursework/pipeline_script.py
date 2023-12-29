@@ -2,10 +2,12 @@ import sys
 from subprocess import Popen, PIPE
 from Bio import SeqIO
 from prometheus_client import start_http_server, Gauge
+import time
 
 # Create a gauge metric
 progress_percent_metric = Gauge('ML_prediction_progress_percentage', 'Progress of ML predictions (%)')
 progress_count_metric = Gauge('ML_prediction_progress_count', 'Progress of ML predictions (count)')
+task_completed = Gauge('ML_task_completed', 'Indicates if the ML task is completed')
 
 """
 usage: python pipeline_script.py INPUT.fasta  
@@ -107,6 +109,7 @@ if __name__ == "__main__":
     a3m_file = "tmp.a3m"
     hhr_file = "tmp.hhr"
     counter = 0
+    task_completed.set(0)
     for k, v in sequences.items():
         with open(tmp_file, "w") as fh_out:
             fh_out.write(f">{k}\n")
@@ -122,3 +125,7 @@ if __name__ == "__main__":
     
     progress_percent_metric.set(100)
     progress_count_metric.set(len(sequences))
+    task_completed.set(1)
+    # After the code is completed, delay 30s for the metric to be scraped by Prometheus
+    time.sleep(30)
+    
