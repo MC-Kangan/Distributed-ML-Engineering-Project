@@ -15,11 +15,6 @@
       set_fact:
         host_index: "{{ ansible_play_hosts_all.index(inventory_hostname) + 1 }}"
 
-    # Print the host name to check
-    - name: Print host index
-      debug:
-        msg: "Host {{ inventory_hostname }} has index {{ host_index }} fasta_part_{{ host_index }}.fasta"
-
 
     - name: Copy file from remote to host
       fetch:
