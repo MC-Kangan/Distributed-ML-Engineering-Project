@@ -3,31 +3,44 @@
   become: true
   become_user: root
   tasks:
-  - name: accept repo GPG key
+  - name: Accept repo GPG key
     ansible.builtin.shell:
       cmd: rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9
+
   - name: Install EPEL
     ansible.builtin.dnf:
       name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
       state: present
-  - name: install node-exporter
+
+  - name: Install node-exporter
     ansible.builtin.dnf:
       name: golang-github-prometheus-node-exporter
       state: latest
-  - name: move service file to where the service files live on the remote machines
+
+  - name: Move service file to where the service files live on the remote machines
     ansible.builtin.copy:
-      src: node_exporter.service
+      src: ~/UCL_COMP0235_BIOCHEM_PROJECT/node_exporter.service
       dest: /etc/systemd/system/node_exporter.service 
       owner: root
       group: root
-  - name: start node-exporter
+
+  - name: Start node-exporter
     ansible.builtin.service:
       name: node_exporter
       state: started
       daemon_reload: true
-  - name: open port 9100 (Skip this step as I did not download firewalld on my cluster machines)
+
+  - name: Open port 9100 for node exporter
     ansible.posix.firewalld:
       port: 9100/tcp
+      permanent: true
+      state: enabled
+      zone: public
+      immediate: true
+      
+  - name: Open port 4505 for custom metrics
+    ansible.posix.firewalld:
+      port: 4505/tcp
       permanent: true
       state: enabled
       zone: public
