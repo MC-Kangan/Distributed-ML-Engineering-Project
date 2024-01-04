@@ -6,7 +6,7 @@
   gather_facts: no
   vars:
     source_file: "/home/ec2-user/data/Coursework/hhr_parse.out"
-    destination_dir: "/home/ec2-user/UCL_COMP0235_BIOCHEM_PROJECT/results/"
+    destination_dir: "/home/ec2-user/UCL_COMP0235_BIOCHEM_PROJECT/Results/"
 
 
   tasks:

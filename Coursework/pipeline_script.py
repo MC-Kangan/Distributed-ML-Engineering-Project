@@ -4,7 +4,7 @@ from Bio import SeqIO
 from prometheus_client import start_http_server, Gauge
 import time
 
-# Create a gauge metric
+# Create gauge metrics
 progress_percent_metric = Gauge('ML_prediction_progress_percentage', 'Progress of ML predictions (%)')
 progress_count_metric = Gauge('ML_prediction_progress_count', 'Progress of ML predictions (count)')
 task_completed = Gauge('ML_task_completed', 'Indicates if the ML task is completed')
@@ -28,6 +28,8 @@ def run_hhsearch(a3m_file, machine_id):
     """
     Run HHSearch to produce the hhr file
     """
+    
+    # If machine_id = 1, meaning the client machine, operate on 3 CPUs, else 1 CPU
     if machine_id == '1':
         num_thread = '3'
     else:
@@ -65,6 +67,7 @@ def run_s4pred(input_file, out_file, machine_id):
     Runs the s4pred secondary structure predictor to produce the horiz file
     """
     
+    # If machine_id = 1, meaning the client machine, operate on 3 CPUs, else 1 CPU
     if machine_id == '1':
         num_thread = '3'
     else:
@@ -94,9 +97,10 @@ def read_input(file):
 
 if __name__ == "__main__":
     
-    machine_id = str(sys.argv[1])
+    machine_id = str(sys.argv[1]) # Receive machine ID as the 1st argument
     test = sys.argv[2] # If test == T means testing mode, else non-testing mode
     
+    # Open the port to send metrics data
     start_http_server(4505)
     
     if test == 'T':
@@ -108,8 +112,11 @@ if __name__ == "__main__":
     horiz_file = "tmp.horiz"
     a3m_file = "tmp.a3m"
     hhr_file = "tmp.hhr"
+    
     counter = 0
     task_completed.set(0)
+    
+    # Iterating each items to predict
     for k, v in sequences.items():
         with open(tmp_file, "w") as fh_out:
             fh_out.write(f">{k}\n")

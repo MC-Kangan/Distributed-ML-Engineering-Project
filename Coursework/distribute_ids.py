@@ -5,6 +5,13 @@ def split_file_into_parts(filename, num_parts):
     """
     Splits the file specified by filename into num_parts equal parts.
     Each part will be saved as a separate file.
+    
+    Parameters:
+       filename (str): Filename to be read and split into parts
+       num_parts (int): Number of parts to split the file into
+       
+    Returns:
+       None
     """
     # Read the contents of the file
     with open(filename, 'r') as file:
@@ -36,7 +43,6 @@ def split_file_into_parts(filename, num_parts):
         else:
             with open(f'experiment_part_{i}.txt', 'w') as part_file:
                 part_file.writelines(part)
-            
             
 
 if __name__ == "__main__":

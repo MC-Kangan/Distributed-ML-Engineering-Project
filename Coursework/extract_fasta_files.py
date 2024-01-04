@@ -2,8 +2,17 @@ import os
 import sys
 from Bio import SeqIO
 
-
 def parse_fasta_biopython(file_path):
+    """
+    Parse the fasta dataset into a dictionary format for efficient searching.
+    
+    Parameters:
+    file_path (str): File path of the dataset
+    
+    Returns:
+    fasta_dict (dict): The same dataset in the dictionary format
+    
+    """
     fasta_dict = {}
     for record in SeqIO.parse(file_path, "fasta"):
         id = record.id
@@ -15,9 +24,14 @@ def parse_fasta_biopython(file_path):
 def write_fasta(id_file, output_file, seq_dict):
     """
     Writes a FASTA file from a dictionary of sequences.
-
-    :param filename: Name of the file to write to.
-    :param seq_dict: Dictionary where keys are sequence identifiers and values are sequences.
+    
+    Parameters:
+    id_file (str): Directory of the text file containing the list of IDs
+    output_file (str): Directory of the output file to write to
+    seq_dict (dict): Database in the dictionary format
+    
+    Returns:
+    None
     """
     
     with open(id_file, 'r') as file:
@@ -39,9 +53,10 @@ def write_fasta(id_file, output_file, seq_dict):
                         
 if __name__ == "__main__":
     
-    # Parse all the fasta dict
+    # Parse the dataset into a dictionary
     fasta_dict = parse_fasta_biopython('./uniprotkb_proteome_UP000005640_2023_10_05.fasta')
     
+    # The systen argument will receive the machine index, e.g. the client machine has an index = 1
     id_file = f'./experiment_part_{sys.argv[1]}.txt'
     
     # Create the fasta file for model prediction

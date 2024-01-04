@@ -3,7 +3,6 @@ import numpy as np
 from scipy.stats import gmean
 import os
 
-
 best_hit = []
 best_score = 0
 good_hit_scores  = []
@@ -24,6 +23,8 @@ else:
     mode = 'w'  # Write mode  
 
 fhOut = open("hhr_parse.out", mode)
+
+# If the mode is write, write the column names in the first line
 if mode == 'w': 
     fhOut.write("query_id,best_hit,best_evalue,best_score,score_mean,score_std,score_gmean\n")
 mean=format(np.mean(good_hit_scores), ".2f")
