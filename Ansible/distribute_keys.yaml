@@ -1,5 +1,5 @@
 ---
-- name: Playbook to copy files
+- name: Playbook to distribute keys
   hosts: mymachines
   become: true
   become_user: root
@@ -13,6 +13,6 @@
 
     - name: Add SSH key to authorized_keys
       ansible.builtin.authorized_key:
-        user: ec2-user  # The user for whom we're setting the key. Change if necessary.
+        user: ec2-user  
         state: present  # Ensures the key is present in the file.
         key: "{{ lookup('file', '/home/ec2-user/.ssh/project_identity.pub') }}"
