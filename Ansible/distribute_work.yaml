@@ -13,7 +13,7 @@
     # Print the host name to check
     - name: Print host index
       debug:
-        msg: "Host {{ inventory_hostname }} has index {{ host_index }}: fasta_part_{{ host_index }}.fasta"
+        msg: "Host {{ inventory_hostname }} has index {{ host_index }}"
 
     - name: Check whether hhr_parse.out from previous run exists
       stat:
@@ -34,7 +34,7 @@
 
     - name: Run python script to start prediction tasks
       ansible.builtin.shell:
-        cmd: cd /home/ec2-user/data/Coursework; nohup python pipeline_script.py {{ host_index }} F > logfile.log 2>&1 &
+        cmd: cd /home/ec2-user/data/Coursework; nohup python pipeline_script.py {{ host_index }} T > logfile.log 2>&1 &
 
 
 

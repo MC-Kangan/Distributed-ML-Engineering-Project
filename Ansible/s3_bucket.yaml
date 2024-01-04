@@ -3,15 +3,7 @@
   hosts: mymachines
   become: yes  
   tasks:
-    - name: Install awscli
-      ansible.builtin.pip:
-        name: awscli
-
-    - name: Ensure AWS S3 module dependencies are installed
-      ansible.builtin.pip:
-        name: boto3
-        state: present
-
+  
     # Task to create a local directory to store files downloaded from S3
     - name: Create local directory for S3 files
       ansible.builtin.file: # Using the file module to manage files and directories

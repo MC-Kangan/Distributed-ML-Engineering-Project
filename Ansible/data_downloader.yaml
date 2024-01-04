@@ -22,8 +22,8 @@
         extra_opts: [--gzip]
       when: wget_result is succeeded
 
-    # - name: Delete the downloaded zip-file from cluster machine to save space
-    #   ansible.builtin.shell:
-    #     cmd: rm -f /home/ec2-user/data/pdb70/pdb70_from_mmcif_latest.tar.gz
+    - name: Delete the downloaded zip-file from cluster machine to save space
+      ansible.builtin.shell:
+        cmd: rm -f /home/ec2-user/data/pdb70/pdb70_from_mmcif_latest.tar.gz
 
 

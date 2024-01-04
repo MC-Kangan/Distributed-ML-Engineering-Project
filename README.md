@@ -43,6 +43,36 @@ The shell script contains the following steps via Ansible:
 - [Download code fof S4Pred and HH-suite from Github](./Ansible/code_downloader.yaml)
 - [Download PDB70 database](./Ansible/data_downloader.yaml)
 
+### Start the ML pipeline
+```shell
+~/UCL_COMP0235_BIOCHEM_PROJECT/Shell/start_pipeline.sh
+```
+The shell script contains the following steps:
+- On the host machine, [split the 6000 ids to 5 parts](./Coursework/distribute_ids.py)
+- Sync local files in Coursework folder with the S3 directory
+- [Download files from S3 bucket](./Ansible/s3_bucket.yaml)
+- [Run the ML prediction task in the distributed fashion](./Ansible/distribute_work.yaml)
+
+> Note: in [distribute_work.yaml](./Ansible/distribute_work.yaml), user could modify the playbook to switch between test mode and normal mode. The test mode will allow each machine to make 5 predictions. In the code snippet below for running the [pipline_script.py](./Coursework/pipeline_script.py), option T refers to testing mode. Change T to F for normal mode.
+```shell
+nohup python pipeline_script.py {{ host_index }} T > logfile.log 2>&1 &
+```
+### Monitoring
+Prometheus: http://3.10.160.39:9090/
+Grafana Dashboard: //http://3.10.160.39:3000/
+
+### Collect results and compute summary statistics
+Once the Grafana dashboard shows 100% completion, run the shell script to collect results and compute statistics.
+```shell
+~/UCL_COMP0235_BIOCHEM_PROJECT/Shell/collect_result.sh
+```
+The shell script contains the following steps:
+- [Collect results from worker machines](./Ansible/collect_result.yaml)
+- [Compile results and compute statistics](./Coursework/compile_results.py)
+
+
+
+
 ### Features
 - Feature 1
 - Feature 2
@@ -74,6 +104,7 @@ Explain how to use your project with code snippets.
 # Python code example
 print('Hello, World!')
 ```
+
 
 ### Shell Snippet
 \```shell

@@ -32,6 +32,15 @@
         extra_args: "--index-url https://download.pytorch.org/whl/cpu"
         state: forcereinstall
 
+    - name: Install awscli
+      ansible.builtin.pip:
+        name: awscli
+
+    - name: Ensure AWS S3 module dependencies are installed
+      ansible.builtin.pip:
+        name: boto3
+        state: present
+
     - name: Install firewalld
       ansible.builtin.dnf:
         name: firewalld

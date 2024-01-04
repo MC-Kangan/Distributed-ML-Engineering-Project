@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # Split the file into 6 parts (1000 ids per part)
     # Client machine has more cpus thus takes 2 parts (2000 ids), which is stored in experiment_part_1
     # Cluster mchines have less cpus thus take 1 part (1000 ids) each, which are stored in experiment_part_2 to 5 
-    split_file_into_parts('./experiment_ids.txt', 6)
+    split_file_into_parts('experiment_ids.txt', 6)
     
     
     
