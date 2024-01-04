@@ -6,6 +6,22 @@
 
 In this project, 6 AWS machines (EC2 instances) were employed, including 1 host machine, 1 client machine and 4 cluster machines. The host machine utilised Ansible for orchestrating operations across the network, managing file distribution, task allocation, and document control, while not participating in the protein prediction task. The client machine and 4 cluster machines were the main worker machines as they were dedicated to executing ML prediction tasks under the host machine's instructions. 
 
+## Repository File Structure
+The files in the repository are organised in 4 folders as shown in the table below. 
+
+| Folder name | Description |
+|----------|----------|
+| [Ansible](./Ansible/) | Contains all the YAML playbook files| 
+| [Coursework](./Coursework/) | Contains Python scripts, experiment id files, Uniprot dataset and etc.| 
+| [Results](./Results/) | Contains output result files and CSV files |
+| [Shell](./Shell/) | Contains shell scripts to run | 
+
+## Pipeline Design
+
+![Architecture](./Design.png)
+Based on the architecture diagram, the host machine split up 6000 IDs from the experiment_ids.txt into 5 text files unequally. Since the client machine had a greater capacity, it was responsible for making 2000 predictions, while other cluster machines made 1000 predictions each. Therefore, after splitting via a Python script, the 5 ID files were uploaded to the S3 bucket. Each machine then downloads 1 ID file from the bucket and carries out the prediction tasks simultaneously. Once the prediction tasks were completed, the host machine would collect and compile the results from all the worker machines.
+
+## Usage
 ### Prerequisites
 The host machine needs to have Python3, Pip and Ansible installed.
 
@@ -13,6 +29,14 @@ The host machine needs to have Python3, Pip and Ansible installed.
 sudo yum install python3 python3-pip -y
 python3 -m pip install --user ansible
 ```
+
+### Installation
+Clone the repository.
+```shell
+git clone https://github.com/MC-Kangan/UCL_COMP0235_BIOCHEM_PROJECT.git
+cd UCL_COMP0235_BIOCHEM_PROJECT
+```
+
 ### Setup SSH keys for inter-machine connection
 On the host machine, generate project_identity key and distribute the key with the below shell script.
 
@@ -58,7 +82,7 @@ nohup python pipeline_script.py {{ host_index }} T > logfile.log 2>&1 &
 ```
 ### Monitoring
 - Prometheus: http://3.10.160.39:9090/
-- Grafana Dashboard: //http://3.10.160.39:3000/
+- Grafana Dashboard: http://3.10.160.39:3000/
 
 ### Collect results and compute summary statistics
 Once the Grafana dashboard shows 100% completion, run the shell script to collect results and compute statistics.
@@ -73,64 +97,7 @@ The two output CSV files can be found in the [Results folder](./Results/).
 
 
 
-
-## Getting Started
-Instructions on how to get a copy of the project up and running on a local machine for development and testing purposes.
-
-### Prerequisites
-What things you need to install the software and how to install them.
-
-\```
-Example: pip install -r requirements.txt
-\```
-
-### Installation
-Step by step series of examples that tell you how to get a development environment running.
-
-\```
-git clone https://yourproject.git
-cd yourproject
-\```
-
-## Usage
-Explain how to use your project with code snippets.
-
-### Python Snippet
-```python
-# Python code example
-print('Hello, World!')
-```
-
-
-### Shell Snippet
-\```shell
-# Shell command example
-echo 'Hello, World!'
-\```
-
-### YAML Snippet
-\```yaml
-# YAML configuration example
-greeting: 'Hello, World!'
-\```
-
-## Adding Images
-You can add images to make your README visually appealing.
-
-![Alt text](path/to/image.jpg)
-![Another image](path/to/another_image.jpg)
-
-## Contributing
-Explain how others can contribute to your project.
-
-## File References
-- [Example File 1](./path/to/file1)
-- [Example File 2](./path/to/file2)
-
-## License
-Describe the license under which your project is released.
-
 ## Contact
-Your Name - email@example.com
+Kangan Chen - ucabkk1@ucl.ac.uk
 
-Project Link: [https://github.com/your_username/your_project](https://github.com/your_username/your_project)
+Project Link: [https://github.com/MC-Kangan/UCL_COMP0235_BIOCHEM_PROJECT](https://github.com/MC-Kangan/UCL_COMP0235_BIOCHEM_PROJECT)
