@@ -14,16 +14,15 @@ sudo yum install python3 python3-pip -y
 python3 -m pip install --user ansible
 ```
 ### Setup SSH keys for inter-machine connection
-On the host machine, generate project_identity key and distribute the key via Ansible ([distribute_keys.yaml](./Ansible/distribute_keys.yaml))
+On the host machine, generate project_identity key and distribute the key with the below shell script.
 
 ```shell
-cd .ssh
-ssh-keygen -f project_identity
-
-# Use the lecturer_key to distribute project identity keys. 
-cd ~/UCL_COMP0235_BIOCHEM_PROJECT/Ansible/
-ansible-playbook --private-key=~/.ssh/lecturer_key -i inventory.yaml distribute_keys.yaml
+~/UCL_COMP0235_BIOCHEM_PROJECT/Shell/worker_setup.sh 
 ```
+The shell script does the following:
+- Generate a new key in the .ssh folder
+- [Distribute the keys to worker machines](./Ansible/distribute_keys.yaml)
+
 ### Setting up worker (client and cluster machines)
 Run the shell script to setup the worker machines.
 
@@ -58,8 +57,8 @@ The shell script contains the following steps:
 nohup python pipeline_script.py {{ host_index }} T > logfile.log 2>&1 &
 ```
 ### Monitoring
-Prometheus: http://3.10.160.39:9090/
-Grafana Dashboard: //http://3.10.160.39:3000/
+- Prometheus: http://3.10.160.39:9090/
+- Grafana Dashboard: //http://3.10.160.39:3000/
 
 ### Collect results and compute summary statistics
 Once the Grafana dashboard shows 100% completion, run the shell script to collect results and compute statistics.
@@ -70,13 +69,10 @@ The shell script contains the following steps:
 - [Collect results from worker machines](./Ansible/collect_result.yaml)
 - [Compile results and compute statistics](./Coursework/compile_results.py)
 
+The two output CSV files can be found in the [Results folder](./Results/).
 
 
 
-### Features
-- Feature 1
-- Feature 2
-- Feature 3
 
 ## Getting Started
 Instructions on how to get a copy of the project up and running on a local machine for development and testing purposes.
