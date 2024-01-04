@@ -34,7 +34,7 @@
 
     - name: Run python script to start prediction tasks
       ansible.builtin.shell:
-        cmd: cd /home/ec2-user/data/Coursework; nohup python pipeline_script.py {{ host_index }} T > logfile.log 2>&1 &
+        cmd: cd /home/ec2-user/data/Coursework; nohup python pipeline_script.py {{ host_index }} F > logfile.log 2>&1 &
 
 
 
