@@ -38,12 +38,12 @@ cd UCL_COMP0235_BIOCHEM_PROJECT
 ```
 
 ### Setup SSH keys for inter-machine connection
-On the host machine, generate project_identity key and distribute the key with the below shell script.
+On the host machine, generate project_identity key and distribute the key using the below.
 
 ```shell
-~/UCL_COMP0235_BIOCHEM_PROJECT/Shell/worker_setup.sh 
+~/UCL_COMP0235_BIOCHEM_PROJECT/Shell/gen_key.sh 
 ```
-The shell script does the following:
+The shell script ([gen_key.sh](./Shell/gen_key.sh)) does the following:
 - Generate a new key in the .ssh folder
 - [Distribute the keys to worker machines](./Ansible/distribute_keys.yaml)
 
@@ -53,7 +53,7 @@ Run the shell script to setup the worker machines.
 ```shell
 ~/UCL_COMP0235_BIOCHEM_PROJECT/Shell/worker_setup.sh 
 ```
-The shell script contains the following steps via Ansible:
+The shell script ([worker_setup.sh](./Shell/worker_setup.sh)) contains the following steps via Ansible:
 - [Mount block storage](./Ansible/mount_volume.yaml)
 - [Install software dependencies](./Ansible/setup.yaml)
 - [Setup Node Exporter for monitoring](./Ansible/node_exporter.yaml)
@@ -62,7 +62,7 @@ The shell script contains the following steps via Ansible:
 ```shell
 ~/UCL_COMP0235_BIOCHEM_PROJECT/Shell/download.sh 
 ```
-The shell script contains the following steps via Ansible:
+The shell script ([download.sh](./Shell/download.sh)) contains the following steps via Ansible:
 - [Download code fof S4Pred and HH-suite from Github](./Ansible/code_downloader.yaml)
 - [Download PDB70 database](./Ansible/data_downloader.yaml)
 
@@ -70,7 +70,7 @@ The shell script contains the following steps via Ansible:
 ```shell
 ~/UCL_COMP0235_BIOCHEM_PROJECT/Shell/start_pipeline.sh
 ```
-The shell script contains the following steps:
+The shell script ([start_pipeline.sh](./Shell/start_pipeline.sh)) contains the following steps:
 - On the host machine, [split the 6000 ids to 5 parts](./Coursework/distribute_ids.py)
 - Sync local files in Coursework folder with the S3 directory
 - [Download files from S3 bucket](./Ansible/s3_bucket.yaml)
@@ -89,7 +89,7 @@ Once the Grafana dashboard shows 100% completion, run the shell script to collec
 ```shell
 ~/UCL_COMP0235_BIOCHEM_PROJECT/Shell/collect_result.sh
 ```
-The shell script contains the following steps:
+The shell script ([collect_result.sh](./Shell/collect_result.sh)) contains the following steps:
 - [Collect results from worker machines](./Ansible/collect_result.yaml)
 - [Compile results and compute statistics](./Coursework/compile_results.py)
 
