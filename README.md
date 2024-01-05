@@ -37,7 +37,7 @@ git clone https://github.com/MC-Kangan/UCL_COMP0235_BIOCHEM_PROJECT.git
 cd UCL_COMP0235_BIOCHEM_PROJECT
 ```
 
-### Setup SSH keys for inter-machine connection
+### Set up SSH keys for inter-machine connection
 On the host machine, generate project_identity key and distribute the key using the below.
 
 ```shell
