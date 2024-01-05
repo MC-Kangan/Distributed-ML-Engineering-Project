@@ -47,7 +47,7 @@ The shell script ([gen_key.sh](./Shell/gen_key.sh)) does the following:
 - Generate a new key in the .ssh folder
 - [Distribute the keys to worker machines](./Ansible/distribute_keys.yaml)
 
-### Setting up worker (client and cluster machines)
+### Set up worker (client and cluster machines)
 Run the shell script to setup the worker machines.
 
 ```shell
@@ -83,6 +83,29 @@ nohup python pipeline_script.py {{ host_index }} T > logfile.log 2>&1 &
 ### Monitoring
 - Prometheus: http://3.10.160.39:9090/
 - Grafana Dashboard: http://3.10.160.39:3000/
+
+The PromQL queries used in Grafana's visualisations are list below.
+```shell
+# CPU Usage %
+(sum by (instance)(rate(node_cpu_seconds_total{mode="user"}[5m])) 
+ + sum by (instance)(rate(node_cpu_seconds_total{mode="system"}[5m]))
+) / count by (instance)(node_cpu_seconds_total{mode="system"}) * 100
+
+# 1 min Load Average
+node_load1
+
+# RAM Usage %
+(1 - (sum by (instance)(node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes) / sum by (instance)(node_memory_MemTotal_bytes))) * 100
+
+# Disk Usage %
+(1 - sum by (instance)(node_filesystem_avail_bytes{mountpoint="/"}) / sum by (instance)(node_filesystem_size_bytes{mountpoint="/"})) * 100
+
+# Progress Count (Customised)
+ML_prediction_progress_count
+
+# Progress Percentage % (Customised)
+ML_prediction_progress_percentage
+```
 
 ### Collect results and compute summary statistics
 Once the Grafana dashboard shows 100% completion, run the shell script to collect results and compute statistics.
