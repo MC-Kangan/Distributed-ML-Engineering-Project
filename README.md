@@ -123,4 +123,4 @@ The two output CSV files can be found in the [Results folder](./Results/).
 ## Contact
 Kangan Chen - ucabkk1@ucl.ac.uk
 
-Project Link: [https://github.com/MC-Kangan/UCL_COMP0235_BIOCHEM_PROJECT](https://github.com/MC-Kangan/UCL_COMP0235_BIOCHEM_PROJECT)
+Project Link: [https://github.com/MC-Kangan/UCL_DISTRIBUTED_ML_PROJECT](https://github.com/MC-Kangan/UCL_DISTRIBUTED_ML_PROJECT)
